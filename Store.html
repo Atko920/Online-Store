@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продавница</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        main {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .project {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .project img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .project h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .project p {
+            margin-bottom: 10px;
+        }
+        .add-to-cart-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-button:hover {
+            background-color: #45a049;
+        }
+        .cart-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 1;
+        }
+        .cart-button:hover {
+            background-color: #007BB5;
+        }
+        .cart {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-left: 1px solid #ccc;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s;
+            z-index: 1;
+            overflow-y: auto;
+        }
+        .cart.active {
+            transform: translateX(0);
+        }
+        .back-button {
+            background-color: #ccc;
+            color: #333;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        .back-button:hover {
+            background-color: #bbb;
+        }
+        .purchase-button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .purchase-button:hover {
+            background-color: #007BB5;
+        }
+        .success-message {
+            color: green;
+            font-weight: bold;
+            display: none;
+        }
+        /* Enhanced styles for input fields */
+        .purchase-form {
+            margin-top: 20px;
+        }
+        .purchase-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .purchase-form input {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .purchase-form input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Продавница</h1>
+    </header>
+    <main>
+        <!-- First Row -->
+        <div class="project" data-name="Проект 1" data-price="1000" data-description="Развивајте вештини во основите на HTML и CSS.">
+            <img src="https://via.placeholder.com/200" alt="Проект 1">
+            <h2>Проект 1</h2>
+            <p>Цена: 1000 MKD</p>
+            <p>Развивајте вештини во основите на HTML и CSS.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 2" data-price="1200" data-description="Научете основи на JavaScript.">
+            <img src="https://via.placeholder.com/200" alt="Проект 2">
+            <h2>Проект 2</h2>
+            <p>Цена: 1200 MKD</p>
+            <p>Научете основи на JavaScript.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 3" data-price="1500" data-description="Создавајте динамички веб страници со JavaScript.">
+            <img src="https://via.placeholder.com/200" alt="Проект 3">
+            <h2>Проект 3</h2>
+            <p>Цена: 1500 MKD</p>
+            <p>Создавајте динамички веб страници со JavaScript.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 4" data-price="1300" data-description="Научете основи на PHP и бази на податоци.">
+            <img src="https://via.placeholder.com/200" alt="Проект 4">
+            <h2>Проект 4</h2>
+            <p>Цена: 1300 MKD</p>
+            <p>Научете основи на PHP и бази на податоци.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 5" data-price="1600" data-description="Создавајте мобилни апликации со React.">
+            <img src="https://via.placeholder.com/200" alt="Проект 5">
+            <h2>Проект 5</h2>
+            <p>Цена: 1600 MKD</p>
+            <p>Создавајте мобилни апликации со React.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="project" data-name="Проект 6" data-price="1400" data-description="Научете за основите на веб дизајн.">
+            <img src="https://via.placeholder.com/200" alt="Проект 6">
+            <h2>Проект 6</h2>
+            <p>Цена: 1400 MKD</p>
+            <p>Научете за основите на веб дизајн.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 7" data-price="1700" data-description="Создавајте игри со JavaScript.">
+            <img src="https://via.placeholder.com/200" alt="Проект 7">
+            <h2>Проект 7</h2>
+            <p>Цена: 1700 MKD</p>
+            <p>Создавајте игри со JavaScript.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 8" data-price="1900" data-description="Развивајте напредни веб апликации со Vue.">
+            <img src="https://via.placeholder.com/200" alt="Проект 8">
+            <h2>Проект 8</h2>
+            <p>Цена: 1900 MKD</p>
+            <p>Развивајте напредни веб апликации со Vue.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 9" data-price="1800" data-description="Научете за бази на податоци со MySQL.">
+            <img src="https://via.placeholder.com/200" alt="Проект 9">
+            <h2>Проект 9</h2>
+            <p>Цена: 1800 MKD</p>
+            <p>Научете за бази на податоци со MySQL.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+        <div class="project" data-name="Проект 10" data-price="1100" data-description="Создајте веб апликации со Node.js.">
+            <img src="https://via.placeholder.com/200" alt="Проект 10">
+            <h2>Проект 10</h2>
+            <p>Цена: 1100 MKD</p>
+            <p>Создајте веб апликации со Node.js.</p>
+            <button class="add-to-cart-button">Додај во Кошничка</button>
+            <div class="success-message">Успешно додадено во кошничка!</div>
+        </div>
+    </main>
+
+    <button class="cart-button">Кошничка</button>
+    <div class="cart">
+        <h2>Кошничка</h2>
+        <button class="back-button">Назад</button>
+        <div class="cart-items">
+            <h3>Вашата Кошничка:</h3>
+            <div class="cart-list"></div>
+            <div class="total">Вкупно: <span class="total-amount">0</span> MKD</div>
+        </div>
+        <form id="purchase-form" action="https://formspree.io/f/mldrqnnd" method="POST" onsubmit="event.preventDefault(); handleFormSubmit();">
+            <input type="hidden" name="receipt" id="receipt-input">
+            <div class="purchase-form">
+                <label for="name">Име:</label>
+                <input type="text" id="name" name="name" placeholder="Внесете го вашето име" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Внесете го вашиот Email" required>
+                <button class="purchase-button" type="submit">Купи</button>
+            </div>
+        </form>
+        <div class="success-message" id="success-message">Успешно купено!</div>
+    </div>
+
+    <script>
+        const cartButton = document.querySelector('.cart-button');
+        const cart = document.querySelector('.cart');
+        const backButton = document.querySelector('.back-button');
+        const cartList = document.querySelector('.cart-list');
+        const totalAmount = document.querySelector('.total-amount');
+        const receiptInput = document.getElementById('receipt-input');
+        const successMessage = document.getElementById('success-message');
+
+        let cartItems = [];
+
+        document.querySelectorAll('.add-to-cart-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const project = event.target.closest('.project');
+                const name = project.getAttribute('data-name');
+                const price = parseFloat(project.getAttribute('data-price'));
+                const description = project.getAttribute('data-description');
+
+                if (cartItems.length < 15) {
+                    cartItems.push({ name, price, description });
+                    updateCart();
+                    showSuccessMessage(project);
+                } else {
+                    alert("Можете да купите само до 15 предмети во исто време.");
+                }
+            });
+        });
+
+        function updateCart() {
+            cartList.innerHTML = '';
+            let total = 0;
+
+            cartItems.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.textContent = `${item.name} - ${item.price} MKD`;
+                cartList.appendChild(cartItem);
+                total += item.price;
+            });
+
+            totalAmount.textContent = total;
+            receiptInput.value = JSON.stringify(cartItems);
+        }
+
+        function showSuccessMessage(project) {
+            const message = project.querySelector('.success-message');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        }
+
+        cartButton.addEventListener('click', () => {
+            cart.classList.toggle('active');
+        });
+
+        backButton.addEventListener('click', () => {
+            cart.classList.remove('active');
+        });
+
+        function handleFormSubmit() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            // Format the message
+            let itemsList = cartItems.map(item => `${item.name} - ${item.price} MKD`).join('\n');
+            const message = `Име: ${name}\nEmail: ${email}\nКошничка:\n${itemsList}`;
+
+            const data = {
+                email: email,
+                message: message
+            };
+
+            fetch('https://formspree.io/f/mldrqnnd', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    cartItems = []; // Clear cart after successful purchase
+                    updateCart();
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        cart.classList.remove('active'); // Close cart after purchase
+                    }, 2000);
+                } else {
+                    alert("Имаше проблем со вашето испраќање. Обидете се повторно.");
+                }
+            })
+            .catch(error => {
+                alert("Имаше проблем со вашето испраќање. Обидете се повторно.");
+            });
+        }
+    </script>
+</body>
+</html>
